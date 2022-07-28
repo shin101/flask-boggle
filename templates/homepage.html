@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/app.css">
+    <title>Boggle</title>
+</head>
+<body>
+    <p>High Score:</p>
+    <p>Current Score:</p>
+    <h2 class="timer">Timer: </h2>
+    <table>
+        {% for row in board %}
+        <tr>
+            {% for num in row %}
+        <td>{{num}}</td>
+        {% endfor %}
+    </tr>
+        {% endfor %}
+ </table> 
+
+
+<form method="POST" class="submit-form"> 
+    <input type="text" placeholder="submit a guess" name="input">
+    <button>submit</button>
+</form> 
+
+<p class="result"></p>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>   
+    <script src="static/app.js"></script>
+</body>    
+</html>
+
+
