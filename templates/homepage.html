@@ -8,9 +8,10 @@
     <title>Boggle</title>
 </head>
 <body>
-    <p>High Score:</p>
-    <p>Current Score:</p>
-    <h2 class="timer">Timer: </h2>
+    <p>High Score: <span id="highscore">{{ highscore }}</span></p>
+    <p>Times Played: {{ nplays }} <span id="nplays"></span></p>
+    <p>Current Score:<span id="cur_score">{{current_score}}</span></p>
+    <h2>Timer: <span id="timer"></span></h2>
     <table>
         {% for row in board %}
         <tr>
@@ -28,6 +29,8 @@
 </form> 
 
 <p class="result"></p>
+
+<ul class="words_list">Words Added</ul>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>   

@@ -1,9 +1,16 @@
+let timer = 5; 
+
 class BoggleGame{
 
-    // STUCK ON WHAT SHOULD GO INSIDE CONSTRUCTOR....
     constructor() {
-        $('.submit-form').on('submit', this.handleSubmit);
+        $('.submit-form').on('submit', this.handleSubmit.bind(this));
         this.score = 0;
+        $('#cur_score').text(this.score);
+        $('#timer').text(timer);
+        this.setTimer();
+        this.words = new Set();
+        this.highscore = 0;
+        $('#highscore').text(0);
     }
 
     async handleSubmit(e){
@@ -12,24 +19,49 @@ class BoggleGame{
         let input = $('input').val(); 
         let res = await axios.get('/check-word', { params: { word: input } });
 
-        console.log(res.data)
         let result = res.data.result;
-        $('.result').text(result)
+        $('.result').html(result);
+
+        if(this.words.has(input)){
+            return $('.result').text('cannot choose the same word again.')
+        }
+
+        if(result==='ok'){
+            this.score += input.length
+            $('#cur_score').text(this.score)
+            this.words.add(input)
+            $('.words_list').append('<li>' + input + '</li>')
+        } 
 
     };
 
-    // HOW DO I GET TIMER TO SHOW??? 
     setTimer(){
-        let timeleft= 50;
-        let timer = setInterval(()=>{
-            if(timeleft=0){
-                clearInterval(timer);
+        let timeLeft=timer;
+        let printCount = setInterval(()=>{
+            timeLeft--;
+            document.getElementById("timer").innerText = timeLeft;
+            if(!timeLeft){
+                alert('Game Over');
+                clearInterval(printCount);
+                this.scoreGame();
             }
-            timeleft -=1;
-        })
+          }, 1000);
+    }
 
+    async scoreGame(){
+        $(".submit-form", this.board).hide();
+        let res = await axios.post('/nplays');
+        if(this.score>this.highscore){
+            this.highscore = this.score;
+            return $('#highscore').text(this.highscore)
+            
+
+        }
     }
 }
+
+
+
 
 let game = new BoggleGame();
 // this refers to entire document when it is outside of class scope
